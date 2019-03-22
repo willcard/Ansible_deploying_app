@@ -1,7 +1,3 @@
-#ansible-playbook --inventory-file inventories/app deploy-app.yml
-#Supprimer l'ancienne clef ssh:
-#   vim ~/.ssh/known_hosts
-
 
 - name: Install packages
   package:
@@ -27,31 +23,31 @@
 
 - name: Copying project's files
   copy:
-    src: roles/deploy-app/data-engineering
+    src: roles/data-engineering-app/data-engineering
     dest: /home/vagrant/
     mode: 755
 
 
 
-#------- Test pour effectuer ou non la tâche suivante -------
-- shell: which pip3.6
-  register: pip36_exists
-
-#    path: /etc/yum.repos.d/nodesource-el7.repo
-#  register: nodejsrepo
+# #------- Test pour effectuer ou non la tâche suivante -------
+# - shell: which pip3.6
+#   register: pip36_exists
 #
-#  when: nodejsrepo.stat.exists == False
-
-
-#------- Doit être excuté qu'une fois -------
-- name: Update pip
-  pip:
-    executable: /usr/bin/pip3.6
-    name: pip
-    state: latest
-  become: yes
-  when: pip36_exists.stdout.find('pip3.6') != -1
-# --------------------------
+# #- path: /usr/bin/pip3
+# #  register: test_pip3
+#
+# #------- Doit être excuté qu'une fois -------
+# - name: Update pip
+#   pip:
+#     executable: /usr/bin/pip3.6
+#     name: pip
+#     state: latest
+#   become: yes
+#   #when: test_pip3 is defined
+#   #    OU
+#   #when: test_pip3.stat.exists == False
+#   when: pip36_exists.stdout.find('pip3.6') != -1
+# # --------------------------
 
 - name: Install python requirements
   pip:

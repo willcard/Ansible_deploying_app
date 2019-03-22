@@ -1,0 +1,48 @@
+version: '3'
+
+services:
+
+  app:
+    build: .
+    command: python run.py
+    volumes:
+      - .:/code
+    ports:
+      - "5000:5000"
+    depends_on:
+      - elastic
+      - mongo
+    restart: on-failure
+
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.5.0
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - "27017:27017"
+
+  mongo_seed:
+    image: mongo
+    container_name: mongo_seed
+    links:
+      - mongo
+    volumes:
+      - ./data/dump:/data/dump
+    command: mongorestore --host mongo -d tripadvisor /data/dump
+    restart: on-failure
+
+
+volumes:
+  mongodata:

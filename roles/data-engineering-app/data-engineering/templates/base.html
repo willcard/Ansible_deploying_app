@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        {% block head %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Not Tripadvisor{% endblock %}</title>
+        {% endblock %}
+    </head>
+    <body>
+        <header>
+        {% block header %}
+            <div class="bg-dark">
+                <div class="container">
+                    <a href="{{ url_for('home') }}"><h1 class="display-3 pt-4 pb-5 mb-0 text-center text-light">{% block main_h1%}Not Tripadvisor{% endblock %}</h1></a>
+                </div>
+            </div>
+            {% block sub_header %}
+            <div class="bg-light py-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="container-fluid">
+                            <h2 class="font-weight-light text-center py-3 text-dark">{% block sub_header_title %}{% endblock %}</h2>
+                            {% block sub_header_subtitle %}{% endblock %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock %}
+        {% endblock %}
+        </header>
+        {% block content %}
+        {% endblock %}
+    {% block script %}
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    {% endblock %}
+    </body>
+</html>

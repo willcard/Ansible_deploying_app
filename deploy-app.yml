@@ -2,4 +2,12 @@
 - hosts: apps
   become: yes
   roles:
-    - deploy-app
+    #- deploy-app
+    - data-engineering-app
+
+- hosts: mongodb
+  become: yes
+  roles:
+    - mongodb
+
+#ansible-playbook --inventory-file inventories/app deploy-app.yml
