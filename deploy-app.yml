@@ -2,7 +2,6 @@
 - hosts: apps
   become: yes
   roles:
-    #- deploy-app
     - data-engineering-app
 
 - hosts: mongodb

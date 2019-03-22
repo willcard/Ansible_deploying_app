@@ -1,0 +1,17 @@
+- name: Enable mongodb repo
+  copy:
+    src: roles/mongodb/mongodb-org.repo
+    dest: /etc/yum.repos.d/
+    mode: 755
+
+- name: Install mongodb
+  package:
+    name: mongodb-org
+    state: present
+
+- name: Restart mongodb
+  service:
+    name: mongod
+    state: restarted
+
+#sudo mkdir -p /data/db
