@@ -1,0 +1,60 @@
+#ansible-playbook --inventory-file inventories/app deploy-app.yml
+#Supprimer l'ancienne clef ssh:
+#   vim ~/.ssh/known_hosts
+
+
+- name: Install packages
+  package:
+    name: "{{item}}"
+    state: latest
+  with_items:
+      - git
+      - epel-release
+      - python36
+      - python-pip
+      - python36-pip
+      - python-devel
+      - python36-devel
+      - libffi-devel
+      - gcc
+      - python-setuptools
+
+- name: Make python3.6 default
+  file:
+    src: /usr/bin/python3.6
+    dest: /usr/bin/python3
+    state: link
+
+- name: Copying project's files
+  copy:
+    src: roles/deploy-app/data-engineering
+    dest: /home/vagrant/
+    mode: 755
+
+
+
+#------- Test pour effectuer ou non la tâche suivante -------
+- shell: which pip3.6
+  register: pip36_exists
+
+#    path: /etc/yum.repos.d/nodesource-el7.repo
+#  register: nodejsrepo
+#
+#  when: nodejsrepo.stat.exists == False
+
+
+#------- Doit être excuté qu'une fois -------
+- name: Update pip
+  pip:
+    executable: /usr/bin/pip3.6
+    name: pip
+    state: latest
+  become: yes
+  when: pip36_exists.stdout.find('pip3.6') != -1
+# --------------------------
+
+- name: Install python requirements
+  pip:
+    executable: /usr/local/bin/pip3
+    requirements: /home/vagrant/data-engineering/requirements.txt
+  become: yes
