@@ -21,6 +21,7 @@
     dest: /usr/bin/python3
     state: link
 
+
 - name: Copying project's files
   copy:
     src: roles/data-engineering-app/data-engineering
@@ -28,29 +29,39 @@
     mode: 755
 
 
+- shell: which pip3.6
+  register: pip36_exists
+  ignore_errors: yes
 
-# #------- Test pour effectuer ou non la tâche suivante -------
-# - shell: which pip3.6
-#   register: pip36_exists
-#
-# #- path: /usr/bin/pip3
-# #  register: test_pip3
-#
-# #------- Doit être excuté qu'une fois -------
-# - name: Update pip
-#   pip:
-#     executable: /usr/bin/pip3.6
-#     name: pip
-#     state: latest
-#   become: yes
-#   #when: test_pip3 is defined
-#   #    OU
-#   #when: test_pip3.stat.exists == False
-#   when: pip36_exists.stdout.find('pip3.6') != -1
-# # --------------------------
+- name: Update pip
+  pip:
+    executable: /usr/bin/pip3.6
+    name: pip
+    state: latest
+  become: yes
+  when: pip36_exists.stdout.find('pip3.6') != -1
+
 
 - name: Install python requirements
   pip:
     executable: /usr/local/bin/pip3
     requirements: /home/vagrant/data-engineering/requirements.txt
   become: yes
+
+
+
+
+
+
+
+
+# ------ TEST ------
+
+- name: Copying HELLO WORLD
+  copy:
+    src: roles/data-engineering-app/hello.py
+    dest: /home/vagrant/
+    mode: 755
+
+- name: Execute HelloWorld Test
+  command: python3 hello.py

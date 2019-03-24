@@ -9,4 +9,9 @@
   roles:
     - mongodb
 
+- hosts: elasticsearch
+  become: yes
+  roles:
+    - elasticsearch
+
 #ansible-playbook --inventory-file inventories/app deploy-app.yml
