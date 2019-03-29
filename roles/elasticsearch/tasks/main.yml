@@ -10,3 +10,8 @@
   service:
     name: elasticsearch
     state: started
+
+- shell: "{{item}}"
+  with_items:
+  - echo "192.168.201.11 app1" > /etc/hosts
+  - echo "192.168.201.12 app2" > /etc/hosts

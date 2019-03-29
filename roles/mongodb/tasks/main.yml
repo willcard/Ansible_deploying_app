@@ -18,3 +18,16 @@
   service:
     name: mongod
     state: restarted
+
+- shell: "{{item}}"
+  with_items:
+    - echo "192.168.201.11 app1" > /etc/hosts
+    - echo "192.168.201.12 app2" > /etc/hosts
+
+
+ ### Définir les variables d'environnement suivante sur les serveur app
+ #ENV ELASTICSEARCH_URL="http://elastic:9200"
+ #ENV MONGODB_URI="mongodb://mongo:27017"
+
+### Ajouter les hosts app1 app2 sur les machines mongo et elasticsearch
+# (et l'inverse)

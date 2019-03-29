@@ -67,8 +67,10 @@
 - shell: "{{item}}"
   with_items:
     - echo "192.168.201.10 loadbalancer" > /etc/hosts
+    - echo "192.168.201.13 elastic" > /etc/hosts
+    - echo "192.168.201.14 mongo" > /etc/hosts
     # ------------ TEST ------------
-    - pm2 start hello.py --interpreter=python3
-    - pm2 start hello.py --interpreter=python3
+    - pm2 start  data-engineering/run.py --interpreter=python3 -f
+    - pm2 start data-engineering/run.py --interpreter=python3 -f
     # ------------------------------
   ignore_errors: yes
