@@ -6,7 +6,7 @@
   with_items:
       - git
       - epel-release
-      - nginx
+      - npm
       - python36
       - python-pip
       - python36-pip
@@ -14,7 +14,15 @@
       - python36-devel
       - libffi-devel
       - gcc
-      - python-setuptools
+      #- python-setuptools
+
+#npm install pm2 -g
+- name: Install pm2 to start app in background
+  npm:
+    name: pm2
+    #args: -g
+    global: yes
+    state: present
 
 - name: Make python3.6 default
   file:
@@ -29,6 +37,13 @@
     dest: /home/vagrant/
     mode: 755
 
+# ------------ TEST ------------
+- name: Copying HELLO WORLD
+  copy:
+    src: roles/data-engineering-app/hello.py
+    dest: /home/vagrant/
+    mode: 755
+# ------------------------------
 
 - shell: which pip3.6
   register: pip36_exists
@@ -49,36 +64,11 @@
     requirements: /home/vagrant/data-engineering/requirements.txt
   become: yes
 
-- name: Install uwsgi
-  pip:
-    executable: /usr/local/bin/pip3
-    name: uwsgi
-
 - shell: "{{item}}"
   with_items:
     - echo "192.168.201.10 loadbalancer" > /etc/hosts
-    - systemctl enable nginx
-    - systemctl start nginx
-
-
-
-
-# RETIRER NGINX ET LAISSRR LES FLASK TOURNER SUR CHAQUE app
-# UTILISER PM2 pour pouvoir fermer le playbook
-
-
-
-
-
-
-
-# ------ TEST ------
-
-- name: Copying HELLO WORLD
-  copy:
-    src: roles/data-engineering-app/hello.py
-    dest: /home/vagrant/
-    mode: 755
-
-# - name: Execute HelloWorld Test
-#   command: python3 hello.py
+    # ------------ TEST ------------
+    - pm2 start hello.py --interpreter=python3
+    - pm2 start hello.py --interpreter=python3
+    # ------------------------------
+  ignore_errors: yes

@@ -26,7 +26,3 @@
   - systemctl restart rsyslog
   - systemctl start haproxy
   - systemctl enable haproxy
-
-## FONCTIONNE: https://www.linode.com/docs/uptime/loadbalancing/how-to-use-haproxy-for-load-balancing/
-
-#https://www.howtoforge.com/tutorial/how-to-setup-haproxy-as-load-balancer-for-nginx-on-centos-7/

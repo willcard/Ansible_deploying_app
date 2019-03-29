@@ -20,6 +20,3 @@
 #     - elasticsearch
 
 #ansible-playbook --inventory-file inventories/app deploy-app.yml
-
-#puis echo "<h1>nginx1.loadbalance.me</h1>" > /usr/share/nginx/html/index.html
-# sur la machine 2 pour différencier les deux machines
