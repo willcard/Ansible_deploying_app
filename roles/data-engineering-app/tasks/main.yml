@@ -37,6 +37,11 @@
     dest: /home/vagrant/
     mode: 755
 
+# Corriger l'erreur de template de l'application
+- shell: cp /home/vagrant/data-engineering/templates/base.html /home/vagrant/data-engineering/main/templates/main/
+- shell: cp /home/vagrant/data-engineering/templates/base.html /home/vagrant/data-engineering/main/templates/
+- shell: cp /home/vagrant/data-engineering/templates/base.html /home/vagrant/data-engineering/main/
+
 # ------------ TEST ------------
 - name: Copying HELLO WORLD
   copy:
@@ -66,9 +71,9 @@
 
 - shell: "{{item}}"
   with_items:
-    - echo "192.168.201.10 loadbalancer" > /etc/hosts
-    - echo "192.168.201.13 elastic" > /etc/hosts
-    - echo "192.168.201.14 mongo" > /etc/hosts
+    - echo "192.168.201.10 loadbalancer" >> /etc/hosts
+    - echo "192.168.201.13 elastic" >> /etc/hosts
+    - echo "192.168.201.14 mongo" >> /etc/hosts
     # ------------ TEST ------------
     - pm2 start  data-engineering/run.py --interpreter=python3 -f
     - pm2 start data-engineering/run.py --interpreter=python3 -f

@@ -7,13 +7,13 @@
 
 - shell: "{{item}}"
   with_items:
-    - echo "192.168.201.11:5000    app1.loadbalancer.me     app1" > /etc/hosts
-    - echo "192.168.201.12:5000   app2.loadbalancer.me     app2" > /etc/hosts
+    - echo "192.168.201.11    app1.loadbalancer.me     app1" >> /etc/hosts
+    - echo "192.168.201.12   app2.loadbalancer.me     app2" >> /etc/hosts
     - mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.orig
-    - echo "$ModLoad imudp" > /etc/rsyslog.conf
-    - echo "$UDPServerRun 514" > /etc/rsyslog.conf
-    - echo "local2.=info     /var/log/haproxy-access.log" > /etc/rsyslog.d/haproxy.conf
-    - echo "local2.notice    /var/log/haproxy-info.log" > /etc/rsyslog.d/haproxy.conf
+    - echo "$ModLoad imudp" >> /etc/rsyslog.conf
+    - echo "$UDPServerRun 514" >> /etc/rsyslog.conf
+    - echo "local2.=info     /var/log/haproxy-access.log" >> /etc/rsyslog.d/haproxy.conf
+    - echo "local2.notice    /var/log/haproxy-info.log" >> /etc/rsyslog.d/haproxy.conf
 
 - name: Copy loadbalancer config
   copy:

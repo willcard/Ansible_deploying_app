@@ -7,19 +7,19 @@
     MONGODB_URI: "mongodb://mongo:27017"
     ELASTICSEARCH_URL: "http://elastic:9200"
 
-- hosts: haproxy
-  become: yes
-  roles:
-    - haproxy
-
-- hosts: mongodb
-  become: yes
-  roles:
-    - mongodb
-
-- hosts: elasticsearch
-  become: yes
-  roles:
-    - elasticsearch
+# - hosts: haproxy
+#   become: yes
+#   roles:
+#     - haproxy
+#
+# - hosts: mongodb
+#   become: yes
+#   roles:
+#     - mongodb
+#
+# - hosts: elasticsearch
+#   become: yes
+#   roles:
+#     - elasticsearch
 
 #ansible-playbook --inventory-file inventories/app deploy-app.yml
